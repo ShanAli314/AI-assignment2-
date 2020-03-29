@@ -9,7 +9,7 @@ import java.util.Queue;
  */
 /**
  *
- * @author Rukhsar Ayub
+ * @author Shan Ali
  */
 public class Node {
 

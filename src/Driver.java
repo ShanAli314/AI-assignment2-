@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
  */
 /**
  *
- * @author Rukhsar Ayub
+ * @author Shan Ali
  */
 public class Driver {
 
@@ -98,21 +98,21 @@ public class Driver {
     }
 
     public static Node BFS(String[] problem, int noOfActions) {
-        Node n = new Node(problem[0], null, "");
+        Node node = new Node(problem[0], null, "");
         Queue<Node> frontier = new LinkedList<>();
-        frontier.add(n);
+        frontier.add(node);
         Queue<String> explored = new LinkedList<>();
         while (true) {
             if (frontier.isEmpty()) {
                 return null;
             }
-            n = frontier.poll();
-            if (goalTest(n, problem[1])) {
-                return n;
+            node = frontier.poll();
+            if (goalTest(node, problem[1])) {
+                return node;
             }
-            explored.add(n.state);
+            explored.add(node.state);
             for (int i = 0; i < noOfActions; i++) {
-                Node child = new Node(states.get(transitionTable[states.indexOf(n.state)][i]), n, actions.get(i));
+                Node child = new Node(states.get(transitionTable[states.indexOf(node.state)][i]), node, actions.get(i));
                 if (!isMemberOfFrontier(frontier, child) && !isMemberOfExploredSet(explored, child.state)) {
                     if (goalTest(child, problem[1])) {
                         return child;
@@ -125,22 +125,22 @@ public class Driver {
     }
 
     /*  function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
-//node ←a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
-if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-frontier ←a FIFO queue with node as the only element
-explored ←an empty set
-loop do
-if EMPTY?( frontier) then return failure
-node←POP( frontier ) /* chooses the shallowest node in frontier 
-add node.STATE to explored
-for each action in problem.ACTIONS(node.STATE) do
-child ←CHILD-NODE(problem, node, action)
-if child .STATE is not in explored or frontier then
-if problem.GOAL-TEST(child .STATE) then return SOLUTION(child )
-frontier ←INSERT(child , frontier )  */
-    public static boolean isMemberOfFrontier(Queue<Node> f, Node n) {
-        for (Node i : f) {
-            if (i.state == n.state) {
+    //node ←a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
+    if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
+    frontier ←a FIFO queue with node as the only element
+    explored ←an empty set
+    loop do
+    if EMPTY?( frontier) then return failure
+    node←POP( frontier ) /* chooses the shallowest node in frontier 
+    add node.STATE to explored
+    for each action in problem.ACTIONS(node.STATE) do
+    child ←CHILD-NODE(problem, node, action)
+    if child .STATE is not in explored or frontier then
+    if problem.GOAL-TEST(child .STATE) then return SOLUTION(child )
+    frontier ←INSERT(child , frontier )  */
+    public static boolean isMemberOfFrontier(Queue<Node> frontier, Node node) {
+        for (Node item : frontier) {
+            if (item.state == node.state) {
                 return true;
             }
         }
@@ -148,15 +148,15 @@ frontier ←INSERT(child , frontier )  */
     }
 
     public static boolean isMemberOfExploredSet(Queue<String> ex, String state) {
-        for (String i : ex) {
-            if (i.equals(state)) {
+        for (String str : ex) {
+            if (str.equals(state)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean goalTest(Node n, String goal) {
-        return n.state.equals(goal);
+    public static boolean goalTest(Node node, String goal) {
+        return node.state.equals(goal);
     }
 }
